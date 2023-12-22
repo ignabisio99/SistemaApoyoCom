@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <title itemprop="name">Perfil</title>
+      <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+      <link rel="canonical" href="https://bootdey.com/snippets/view/bs4-social-profile-header" itemprop="url">
+      <link rel="stylesheet" href="../static/assets/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="../static/assets/css/styles.min.css">
+       <link rel="stylesheet" href="../static/assets/css/custom_styles.css">
+   </head>
+   <body style="margin: 0;">
+    <nav class="navbar navbar-expand-md bg-dark py-3" data-bs-theme="dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#"><span>Grupo 5</span></a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-5">
+
+              <ul class="navbar-nav ms-auto">
+                  {{#if esAdmin}}
+                  <li class="nav-item"><a class="nav-link" href="./cargaDatos">Carga Datos</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#">Perfil</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#" id="enlaceLogout">Salir</a></li>
+
+                  {{else}}
+                  <li class="nav-item"><a class="nav-link" href="./rankingsLiviano">Rankings Liviano</a></li>
+                  <li class="nav-item"><a class="nav-link" href="../static/VistasRanking.html">Rankings Pesado</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="#">Perfil</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#" id="enlaceLogout">Salir</a></li>
+                  {{/if}}
+              </ul>
+
+            </div>
+        </div>
+    </nav>
+      <div id="snippetContent">
+         {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"> --}}
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css"/>
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"/>
+         {{!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css"> --}}
+         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+         <div class="bg-white">
+            <div class="container">
+               <div class="d-flex justify-content-between align-items-center py-4">
+                  <div>  </div>
+                  <div>   <i class="ion ion-md-mail"></i> <a></a></div>
+               </div>
+            </div>
+            <hr class="m-0">
+            <div class="container">
+                {{#if exito}}
+                    <div class="alert alert-success" role="alert">
+                        Se actualizó correctamente
+                    </div>
+                {{/if}}
+
+               <div class="text-center py-5">
+                    <img src="../static/assets/images/avatar6.png" class="ui-w-1007 rounded-circle">
+                  <div class="col-md-8 col-lg-6 col-xl-5 p-0 mx-auto">
+                     <h4 class="font-weight-bold my-4">{{miembro.nombre}}, {{miembro.apellido}}</h4>
+                     <div class="text-muted leftT"> Telefono: {{miembro.telefono}}</div>
+                     <div class="text-muted leftT"> Mail: {{miembro.email}}</div>
+                  </div>
+                  <div class="text-center"> <a href="#" class="btn icon-btn borderless btn-outline-twitter btn-lg btn-round"> <span class="ion ion-logo-twitter"></span> </a> <a href="#" class="btn icon-btn borderless btn-outline-facebook btn-lg btn-round"> <span class="ion ion-logo-facebook"></span> </a> <a href="#" class="btn icon-btn borderless btn-outline-instagram btn-lg btn-round"> <span class="ion ion-logo-instagram"></span> </a></div>
+               </div>
+            </div>
+
+            <hr class="m-0">
+            <ul class="nav nav-tabs tabs-alt justify-content-center">
+               <li class="nav-item"> <a class="nav-link py-4 active" data-bs-toggle="tab" href="#comunidades">Comunidades</a></li>
+               <li class="nav-item"> <a class="nav-link py-4" data-bs-toggle="tab" href="#incidentes">Incidentes a Revisar</a></li>
+            </ul>
+         </div>
+
+         <div class="container">
+             <!-- Contenido de Comunidades, Información e Incidentes a Revisar -->
+             <div class="tab-content">
+                 <div class="tab-pane fade show active" id="comunidades">
+
+                    <section class="node_category card d-inline-block w-100 mb-3">
+                    <div class="card-body2">
+                     <!-- Contenido de Comunidades -->
+                     <h4 class="centroH">Detalles Comunidades:</h4>
+                     <ul class="centroComu">
+                         {{#if comunidades}}
+                             {{#each comunidades}}
+                                 <li><a href="javascript:void(0);" data-bs-target="#modal-comunidad" data-bs-toggle="modal" data-bs-placement="top" title="Ver" class="px-2 text-primary" onclick="mostrarDetallesMiembro('{{nombre}}', '{{apellido}}', '{{tipoDeMiembro}}','{{comunidad_codigo}}')">
+                                     <i class="bi bi-eye font-size-18"></i></a>
+                                     <a>{{comunidad}}</a>
+                                     <a href="http://localhost:4567/comunidad/{{comunidad_codigo}}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" class="px-2  text-secondary"><i class="bi bi-arrow-return-right"></i></a>
+                                 </li>
+                             {{/each}}
+                         {{else}}
+                             <p>No estás en ninguna comunidad</p>
+                         {{/if}}
+                     </ul>
+                     </div>
+                     </section>
+                 </div>
+                 <div class="tab-pane fade" id="informacion">
+                     <section class="node_category card d-inline-block w-100 mb-3">
+                     <div class="card-body2">
+                     <!-- Contenido de Información -->
+                     </div>
+                     </section>
+                 </div>
+                 <div class="tab-pane fade" id="incidentes">
+                     <section class="node_category card d-inline-block w-100 mb-3">
+                         <div class="card-body2">
+                             <!-- Contenido de Incidentes a Revisar -->
+                             <h4 class="centroH">Incidentes a Revisar:</h4>
+                             <!-- Agrega aquí el contenido específico de los incidentes a revisar -->
+                             <ul class="centroComu">
+                                 {{#if incidentes}}
+                                    {{#each incidentes}}
+                                         <li><a>{{servicio}} en {{establecimiento}}</a>
+                                             <a href=# data-bs-toggle="modal" data-bs-target="#modal-1" onclick="mostrarDetallesIncidente('{{creador}}', '{{servicio}}', '{{establecimiento}}','{{fechaCreacion}}','{{descripcion}}','{{idComunidad}}','{{codigo}}')" data-bs-placement="top" title="Edit" class="px-2  text-secondary"><i class="bi bi-arrow-return-right"></i></a>
+                                         </li>
+                                    {{/each}}
+                                {{else}}
+                                     <p>No hay ningún incidente para revisar</p>
+                                {{/if}}
+                            </ul>
+                         </div>
+                     </section>
+                 </div>
+             </div>
+         </div>
+          <div class="modal fade" role="dialog" tabindex="-1" id="modal-1">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Incidente</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="table-responsive">
+                              <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>Creador:</th>
+                                      <th id ="creador"><span style="font-weight: normal !important;" ></span></th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr>
+                                      <td><strong>Servicio:</strong></td>
+                                      <td id="servicio"></td>
+                                  </tr>
+                                  <tr>
+                                      <td><strong>Establecimiento:</strong></td>
+                                      <td id="establecimiento"></td>
+                                  </tr>
+                                  <tr>
+                                      <td><strong>Fecha Creación:</strong></td>
+                                      <td id="fechaCreacion"></td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <h5 style="padding-left: 6px;">Descripcion:</h5>
+                          <p id="descripcion" style="padding-left: 6px;"></p>
+                      </div>
+                      <div class="modal-footer">
+                          <button id="cerrarIncidenteBtn" class="btn btn-warning" type="button" data-bs-dismiss="modal">Cerrar Incidente</button>
+                          <button class="btn btn-light" type="button" data-bs-dismiss="modal" >Cerrar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <form id="miembroForm" action="http://localhost:4567/perfil" method="post">
+          <div class="modal fade" role="dialog" tabindex="-1" id="modal-comunidad">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h4 class="modal-title">Miembro</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <div class="modal-body">
+                          <div class="table-responsive">
+                                  <input type="hidden" id="idComunidad" name="idComunidad" value="">
+                                  <table class="table">
+                                      <tbody>
+                                      <tr>
+                                          <td><strong>Nombre:</strong></td>
+                                          <td id="nombreMiembro"></td>
+                                      </tr>
+                                      <tr>
+                                          <td><strong>Apellido:</strong></td>
+                                          <td id="apellidoMiembro"></td>
+                                      </tr>
+                                      <tr>
+                                          <td><strong>Tipo Usuario:</strong></td>
+                                          <td>
+                                              <select id="tipoMiembro" name="tipoMiembro">
+                                                  <option value="Observador">Observador</option>
+                                                  <option value="Usuario de Servicio">Usuario de Servicio</option>
+                                              </select>
+                                          </td>
+                                      </tr>
+                                      </tbody>
+                                  </table>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-light" type="button" data-bs-dismiss="modal" >Cerrar</button>
+                          <button class="btn btn-primary" type="submit" data-bs-dismiss="modal">Aplicar Cambios</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          </form>
+          <div class="modal fade" id="modal-exito2" tabindex="-1" role="dialog" aria-labelledby="successModalLabel2" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header" style="background-color: #4CAF50; color: #fff;">
+                          <h5 class="modal-title" id="successModalLabel2">Éxito <span style="font-size: 1.5em;">✅</span></h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          Se cerró correctamente el incidente
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal fade" id="modal-error2" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel2" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header" style="background-color: #ff6b6b; color: #000;">
+                          <h5 class="modal-title" id="errorModalLabel2">
+                              Error &#x274C;
+                          </h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          Se produjo un error al cerrar el incidente.
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-F1RTS0P1CD"></script> <script>window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+         
+         gtag('config', 'G-F1RTS0P1CD');
+      </script>
+      <script>
+              document.addEventListener('DOMContentLoaded', function () {
+                  let id_sesion = "{{idSesion}}";
+                  localStorage.setItem('id_sesion', id_sesion);
+              });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Agregar manejo de clics para cambiar entre pestañas
+                const tabs = document.querySelectorAll('.nav-tabs .nav-link');
+                const tabContents = document.querySelectorAll('.tab-content .tab-pane');
+
+                tabs.forEach((tab, index) => {
+                    tab.addEventListener('click', function () {
+                        // Ocultar todos los contenidos de pestañas
+                        tabContents.forEach((content) => {
+                            content.classList.remove('show', 'active');
+                        });
+
+                        // Mostrar el contenido de la pestaña correspondiente
+                        tabContents[index].classList.add('show', 'active');
+                    });
+                });
+            });
+        </script>
+    <script type="module">
+        import { logout } from '../Fire-Base/validador/logout.js';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Asigna la función logout al evento click del enlace.
+            const enlaceLogout = document.getElementById('enlaceLogout');
+
+            if (enlaceLogout) {
+                enlaceLogout.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evita la navegación si es un enlace.
+                    logout(); // Llama a la función logout.
+                });
+            } else {
+                console.error("Elemento con ID 'enlaceLogout' no encontrado.");
+            }
+        });
+    </script>
+        <script>
+            function mostrarDetallesIncidente(creador, servicio, establecimiento,fechaCreacion,descrpcion,idComunidad,codigoIncidente) {
+                // Rellenar dinámicamente los campos del modal
+                document.getElementById('creador').innerText = creador;
+                document.getElementById('servicio').innerText = servicio;
+                document.getElementById('establecimiento').innerText = establecimiento;
+                document.getElementById('fechaCreacion').innerText = fechaCreacion;
+                document.getElementById('descripcion').innerText = descrpcion;
+
+                var cerrarIncidenteBtn = document.getElementById('cerrarIncidenteBtn');
+                cerrarIncidenteBtn.setAttribute('data-codigo-incidente', codigoIncidente);
+                cerrarIncidenteBtn.setAttribute('data-id-comunidad', idComunidad);
+            }
+        </script>
+    <script>
+        document.getElementById('cerrarIncidenteBtn').addEventListener('click', function () {
+            // Obtén el código del incidente y otros detalles que necesites
+            var codigoIncidente = this.getAttribute('data-codigo-incidente');
+            var idComunidad = this.getAttribute('data-id-comunidad');
+            let idSesion = "{{idSesion}}";
+
+            // Realiza la solicitud PATCH al servidor
+            fetch(`http://localhost:4567/api/cerrarIncidente/${idComunidad}/${idSesion}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ codigo: codigoIncidente, fechaCierre: obtenerFechaCierre() })
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cerrar el incidente');
+                }
+                return response.text();
+            }).then(data => {
+                // Verificar el contenido de la respuesta y mostrar el modal en consecuencia
+                if (data.includes("Incidente cerrado con éxito")) {
+                    // Muestra el modal de éxito
+                    $('#modal-exito2').modal('show');
+                    // Esperar 1 segundo y luego redirigir
+                    setTimeout(function () {
+                        // Recargar la página /perfil después de 1 segundo
+                        window.location.href = 'http://localhost:4567/perfil';
+                    }, 1000);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                // Muestra el modal de error
+                $('#modal-error2').modal('show');
+            });
+        });
+
+        // Funciones auxiliares para obtener el código del incidente y la fecha de cierre
+        function obtenerFechaCierre() {
+            return new Date().toISOString(); // Puedes ajustar esto según cómo manejas las fechas
+        }
+    </script>
+      <script>
+          function mostrarDetallesMiembro(nombre, apellido, tipoDeMiembro, comunidadCodigo) {
+              // Rellenar dinámicamente los campos del modal
+              document.getElementById('nombreMiembro').innerText = nombre;
+              document.getElementById('apellidoMiembro').innerText = apellido;
+
+              // Configurar la opción seleccionada en el campo tipoMiembro
+              var tipoMiembroSelect = document.getElementById('tipoMiembro');
+              tipoMiembroSelect.value = tipoDeMiembro;
+
+              document.getElementById('idComunidad').value = comunidadCodigo;
+
+          }
+      </script>
+   </body>
+</html>

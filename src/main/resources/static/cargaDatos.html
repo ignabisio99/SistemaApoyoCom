@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de datos</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.min.css">
+    <link rel="stylesheet" href="assets/css/custom_styles.css">
+</head>
+
+<body style="margin: 0;">
+    <nav class="navbar navbar-expand-md bg-dark py-3" data-bs-theme="dark" style="margin-bottom: 50px;">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#"><span>Grupo 5</span></a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-5">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol-5">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Cargar Datos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="enlaceLogout">Salir</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div style="margin-left: 0; margin-right: 0px; margin-bottom: 2px; padding-top: 69px; margin-top: 57px; color: var(--bs-body-color); background: var(--bs-secondary-bg);">
+        <div class="row padMar mx-auto col-sm-9 col-md-7 col-lg-5 col-xl-6 colorCajasBlancas margenesCajas">
+            <div class="col margenesCajas">
+                <div class="row">
+                    <div class="col-12 col-sm-10 col-md-4 col-lg-5 col-xl-9 offset-lg-2 d-flex flex-wrap padMar mx-auto justify-content-center"
+                        style="padding-bottom: 0px; margin-bottom: 85px; margin-top: -68px;">
+                        <h4 class="padMar">SUBIR ARCHIVO</h4>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-10 col-lg-11 col-xl-9 d-flex flex-wrap padMar mx-auto">
+                        <p class="margenesTxts" style="margin-top: -75px;">Por favor, siga las instrucciones a continuación para subir su archivo: </p>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-10 col-lg-11 col-xl-9 d-flex flex-wrap padMar mx-auto" style="margin-bottom: 30px;">
+                        <p class="margenesTxts" style="padding-bottom: 0px; margin-top: -39px;">
+                            1) Haga clic en el botón de abajo para seleccionar el archivo.<br>
+                            2) Asegúrese de que sea de formato '.csv'.<br>
+                            3) Haga clic en el botón "Subir" para cargar el archivo.<br><br>
+                            Ejemplo de un archivo:<br>
+                            Raul SA, propietario, COLECTIVO<br>
+                            UTN, organismo de control, Organizacion1, organizacion<br>
+                            Lopez SA, propietario, TREN<br>
+                            Messi SRL, organismo de control, 7, COLECTIVO<br>
+                            Roberto SA, organismo de control, A, SUBTE
+                        </p>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-10 col-lg-9 col-xl-9 d-flex flex-wrap padMar mx-auto" style="padding-top: 0px; margin-bottom: 46px; margin-top: -16px;">
+                        <!-- Agregado el campo de entrada de tipo archivo y el script JS -->
+                        <input type="file" id="fileInput" style="display: none;" onchange="updateFileName()">
+                        <label class="btn btn-primary btn-Oscuro" for="fileInput">SELECCIONAR ARCHIVO</label>
+                        <!-- Modificado el estilo del input para centrar el texto y ajustar los márgenes -->
+                        <input type="text" id="fileNameDisplay" style="text-align: center; margin: 0; padding: 5px; border: 2px solid #3b76e1;" placeholder=" No file chosen..." readonly>
+                        <button class="btn btn-primary btn-Oscuro" type="button" onclick="uploadFile()">SUBIR</button>
+                    </div>
+                    <div class="col-12 col-sm-10 col-md-9 col-lg-10 col-xl-9 d-flex flex-wrap padMar mx-auto" style="padding-right: 132px; margin-right: -141px; margin-top: -58px;">
+                        <!-- Modal de éxito -->
+                        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="successModalLabel">Éxito</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        El archivo fue subido exitosamente.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p id="successMessage" class="tada animated margenesTxts" style="display: none; margin-top: 20px; margin-left: 98px; padding-top: 20px;">Estado: Archivo subido correctamente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Agregados los scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        function updateFileName() {
+            var fileName = document.getElementById('fileInput').files[0].name;
+            document.getElementById('fileNameDisplay').value = fileName;
+        }
+
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                var fileName = fileInput.files[0].name;
+
+                if (fileName.endsWith('.csv')) {
+
+                    // Mostrar el mensaje de éxito usando el modal
+                    var successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    successModal.show();
+                } else {
+                    // Mostrar mensaje de error en el modal
+                    var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                    errorModal.show();
+                }
+            } else {
+
+                console.error('No se ha seleccionado ningún archivo');
+            }
+        }
+    </script>
+    <script type="module">
+        import { logout } from '../Fire-Base/validador/logout.js';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Asigna la función logout al evento click del enlace.
+            const enlaceLogout = document.getElementById('enlaceLogout');
+
+            if (enlaceLogout) {
+                enlaceLogout.addEventListener('click', function(event) {
+                    event.preventDefault(); // Evita la navegación si es un enlace.
+                    logout(); // Llama a la función logout.
+                });
+            } else {
+                console.error("Elemento con ID 'enlaceLogout' no encontrado.");
+            }
+        });
+    </script>
+
+    <!-- Modal de error -->
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    No se pudo subir el archivo. Asegúrate de que sea un archivo con extensión ".csv".
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
